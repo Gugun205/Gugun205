@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Karang Taruna RW 07</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 0;
+      background: #f9f9f9;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(135deg, #f8f9fa, #28292b);
+      color: white;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 15px 30px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    header .logo-area { display: flex; align-items: center; }
+    header img { height: 70px; margin-right: 20px; }
+    header h1 { margin: 0; font-size: 24px; }
+    header p { margin: 3px 0 0; font-size: 14px; }
+    nav {
+      display: flex; justify-content: center;
+      background: #333; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    nav a {
+      color: white; padding: 14px 20px;
+      text-decoration: none; transition: background 0.3s;
+    }
+    nav a:hover { background: #0052cc; }
+
+    /* Banner Slideshow */
+    .banner {
+  position: relative;
+  height: 400px; /* bisa kamu sesuaikan */
+  overflow: hidden;
+  border-bottom: 5px solid goldenrod;
+}
+.banner-slide {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 1; /* selalu terlihat */
+}
+
+    .banner-slide.active { opacity: 1; }
+    .banner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 1;
+    }
+    .banner h2 {
+      position: relative;
+      z-index: 2;
+      font-size: 32px;
+      padding: 20px 40px;
+      background: rgba(255,255,255,0.15);
+      border: 3px solid rgba(255,255,255,0.5);
+      border-radius: 15px;
+      backdrop-filter: blur(5px);
+      color: white;
+      text-align: center;
+      margin: 0;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    .content {
+      padding: 30px; max-width: 1100px; margin: auto;
+      background: rgba(255,255,255,0.95);
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-top: 30px;
+    }
+    .content h2 { color: #0052cc; margin-bottom: 15px; }
+    .content ul { line-height: 1.7; }
+
+    /* Diagram Organisasi */
+    .org-chart { display: flex; justify-content: center; margin: 40px 0; }
+    .org-chart ul { padding-top: 20px; position: relative; }
+    .org-chart li {
+      float: left; text-align: center;
+      list-style-type: none;
+      position: relative; padding: 20px 5px 0 5px;
+    }
+    .org-chart li::before, .org-chart li::after {
+      content: ''; position: absolute; top: 0; right: 50%;
+      border-top: 2px solid #ccc; width: 50%; height: 20px;
+    }
+    .org-chart li::after { right: auto; left: 50%; border-left: 2px solid #ccc; }
+    .org-chart li:only-child::before, 
+    .org-chart li:only-child::after { content: none; }
+    .org-chart li:only-child { padding-top: 0; }
+    .org-chart li:first-child::before, 
+    .org-chart li:last-child::after { border: 0 none; }
+    .org-chart li:last-child::before { border-right: 2px solid #ccc; }
+    .org-chart div {
+      padding: 10px 20px;
+      display: inline-block;
+      border-radius: 10px;
+      font-weight: bold;
+      color: white;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      position: relative;
+      cursor: pointer;
+    }
+    .org-chart div::after {
+      content: attr(data-info);
+      position: absolute;
+      bottom: -60px; left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s, transform 0.4s;
+    }
+    .org-chart div:hover::after {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .ketua-rw { background: goldenrod; border: 2px solid #daa520; }
+    .ketua-karang { background: #0052cc; border: 2px solid #003d99; }
+    .wakil { background: darkorange; border: 2px solid #cc7000; }
+    .sekretaris, .bendahara { background: seagreen; border: 2px solid #2e8b57; }
+    .bidang { background: purple; border: 2px solid indigo; }
+
+    footer {
+      background: #333; color: white;
+      text-align: center; padding: 15px;
+      margin-top: 30px;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.3);
+    }
+    footer p { margin: 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-area">
+      <img src="karta.jpg" alt="Logo Karang Taruna">
+      <div>
+        <h1>KARANG TARUNA RW 07</h1>
+        <p>Kp. Babakan Timur, Desa Nagreg, Kecamatan Nagreg, Kab. Bandung, Jawa Barat</p>
+      </div>
+    </div>
+    <div class="social-icons">
+      <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+      <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
+  </header>
+
+  <nav>
+    <a href="#tentang-kami">Beranda</a>
+    <a href="#profil">Profil</a>
+    <a href="#agenda">Agenda</a>
+    <a href="#informasi">Informasi Publik</a>
+    <a href="#kontak">Kontak</a>
+  </nav>
+
+ <div class="banner">
+  <div class="banner-slide active" style="background-image: url('logo07.jpeg'); background-size: cover; background-position: center;"></div>
+</div>
+
+
+  <!-- Tentang Kami -->
+  <div id="tentang-kami" class="content">
+    <h2>Tentang Kami</h2>
+    <p>
+      Karang Taruna RW 07 adalah wadah pengembangan generasi muda yang berfokus pada pembinaan,
+      pemberdayaan, dan pengembangan potensi pemuda di bidang sosial, olahraga, seni, keterampilan,
+      serta kegiatan kemasyarakatan lainnya.
+    </p>
+    <p>
+      Sebagai mitra pemerintah, kami aktif berpartisipasi dalam pembangunan desa dan pemberdayaan masyarakat
+      untuk mewujudkan generasi muda yang kreatif, mandiri, dan berdaya saing.
+    </p>
+    <a href="#profil" style="
+      display:inline-block; margin-top:15px; background:#0052cc; color:white;
+      padding:10px 20px; border-radius:8px; text-decoration:none;">
+      Selengkapnya
+    </a>
+  </div>
+
+  <!-- Profil -->
+  <div id="profil" class="content">
+    <h2>Profil Karang Taruna RW 07</h2>
+    <h3>Tujuan</h3>
+    <p>Karang Taruna didirikan untuk memberikan pembinaan dan pemberdayaan kepada pemuda dalam berbagai bidang seperti keorganisasian, ekonomi, olahraga, keterampilan, advokasi, keagamaan, dan kesenian.</p>
+    <h3>Keanggotaan</h3>
+    <p>Keanggotaan Karang Taruna terbuka bagi pemuda dan pemudi berusia 11 hingga 45 tahun, sedangkan pengurus biasanya berusia antara 17 hingga 35 tahun.</p>
+    <h3>Aktivitas</h3>
+    <p>Karang Taruna aktif dalam berbagai kegiatan sosial, ekonomi, dan pengembangan potensi pemuda, termasuk pelatihan, kegiatan olahraga, seni, serta advokasi sosial.</p>
+    <h3>Kemitraan</h3>
+    <p>Karang Taruna berperan sebagai mitra pemerintah dalam pelaksanaan program pembangunan sosial yang melibatkan pemuda.</p>
+    <h3>Peran Karang Taruna</h3>
+    <ul>
+      <li><b>Pengembangan Potensi:</b> Karang Taruna menjadi wadah bagi generasi muda untuk mengembangkan potensi diri dan kreativitas mereka dalam berbagai bidang.</li>
+      <li><b>Pemberdayaan Masyarakat:</b> Karang Taruna terlibat dalam kegiatan pemberdayaan masyarakat.</li>
+      <li><b>Pencegahan Masalah Sosial:</b> Karang Taruna berperan dalam mencegah perilaku negatif di kalangan remaja.</li>
+      <li><b>Pembangunan Desa:</b> Karang Taruna aktif berpartisipasi dalam pembangunan desa.</li>
+    </ul>
+    <h3>Struktur Organisasi</h3>
+    <div class="org-chart">
+      <ul>
+        <li>
+          <div class="ketua-rw" data-info="Bertanggung jawab atas seluruh kegiatan di RW">Ketua RW<br><small>Nama Ketua RW</small></div>
+          <ul>
+            <li>
+              <div class="ketua-karang" data-info="Memimpin seluruh kegiatan Karang Taruna">Ketua Karang Taruna<br><small>Nama Ketua</small></div>
+              <ul>
+                <li>
+                  <div class="wakil" data-info="Membantu Ketua">Wakil Ketua<br><small>Nama Wakil</small></div>
+                  <ul>
+                    <li><div class="sekretaris" data-info="Mengelola administrasi">Sekretaris<br><small>Nama Sekretaris</small></div></li>
+                    <li><div class="bendahara" data-info="Mengatur keuangan">Bendahara<br><small>Nama Bendahara</small></div></li>
+                  </ul>
+                </li>
+                <li>
+                  <div class="bidang" data-info="Mengkoordinasikan bidang kegiatan">Koordinator Bidang<br><small>Nama Koordinator</small></div>
+                  <ul>
+                    <li><div class="bidang" data-info="Mengatur kegiatan olahraga">Bidang Olahraga<br><small>Nama</small></div></li>
+                    <li><div class="bidang" data-info="Mengatur kegiatan seni">Bidang Kesenian<br><small>Nama</small></div></li>
+                    <li><div class="bidang" data-info="Mengatur kegiatan sosial">Bidang Sosial<br><small>Nama</small></div></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Agenda -->
+  <div id="agenda" class="content">
+    <h2>Agenda Kegiatan</h2>
+    <ul>
+      <li>17 Agustus 2025: Lomba Kemerdekaan & Malam Puncak</li>
+      
+    </ul>
+  </div>
+
+  <!-- Informasi Publik -->
+  <div id="informasi" class="content">
+    <h2>Informasi Publik</h2>
+    <ul>
+      <li><b>01 Agustus 2025:</b> Pendaftaran lomba 17 Agustus resmi dibuka.</li>
+      <li><b>Agustus 2025:</b> Hasil rapat koordinasi panitia Karang Taruna RW 07.</li>
+      <li><b>Agustus 2025:</b> Sosialisasi program pemberdayaan pemuda.</li>
+    </ul>
+  </div>
+
+  <!-- Kontak -->
+  <div id="kontak" class="content">
+    <h2>Kontak</h2>
+    <p>Alamat: Kp. Babakan Timur RW 07, Desa Nagreg, Kecamatan Nagreg, Kab. Bandung, Jawa Barat</p>
+    <p>Email: karangtaruna.rw07@gmail.com</p>
+    <p>Telepon/WA: +62 812 3456 7890</p>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Karang Taruna RW 07 - Desa Nagreg</p>
+  </footer>
+
+  <script>
+    // Slideshow otomatis
+    let slides = document.querySelectorAll('.banner-slide');
+    let index = 0;
+    setInterval(() => {
+      slides[index].classList.remove('active');
+      index = (index + 1) % slides.length;
+      slides[index].classList.add('active');
+    }, 5000);
+  </script>
+</body>
+</html>
